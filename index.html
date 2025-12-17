@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Search App</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+    }
+
+    /* Hero */
+    .hero {
+      height: 230px;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0.35),
+          rgba(0, 0, 0, 0.35)),
+        url("https://media.istockphoto.com/id/889402258/photo/these-seats-need-to-be-filled.jpg?s=2048x2048&w=is&k=20&c=03WbWlfrmdFbPgfBEWTbVqqndxIRR3AFVv92nzQo8o0=") center / cover no-repeat;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .hero-content h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .hero-content p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    /* Container */
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    /* Search */
+    .search-section {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .search-section input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .search-section input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+
+    .search-section button {
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Result */
+    .result-section {
+      display: grid;
+      gap: 15px;
+    }
+
+    .bus-card {
+      background: white;
+      padding: 18px;
+      border-radius: 10px;
+      border-left: 6px solid #007bff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .fare {
+      display: inline-block;
+      margin-top: 6px;
+      background: #e7f1ff;
+      color: #0056b3;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Bus Animation */
+    .bus-animation {
+      margin: 25px 0;
+      height: 80px;
+      background: linear-gradient(to right, #dbeafe, #f0f9ff);
+      border-radius: 12px;
+      display: none;
+      position: relative;
+    }
+
+    .bus {
+      position: absolute;
+      left: -120px;
+      top: 15px;
+      font-size: 50px;
+      animation: moveBus 2.5s linear forwards;
+    }
+
+    @keyframes moveBus {
+      from {
+        left: -120px;
+      }
+
+      to {
+        left: 100%;
+      }
+    }
+
+    .simple-footer {
+      margin-top: 50px;
+      padding: 30px 15px;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-card {
+      background: #f1f3f5;
+      background: #e9ecef;
+
+      padding: 20px 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      font-size: 14px;
+      color: #555;
+    }
+
+    .footer-card p {
+      margin: 6px 0;
+    }
+
+    .footer-card strong {
+      color: #333;
+    }
+
+    .footer-card a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-card a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <div id="navbar"></div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Bus Search Bangladesh</h1>
+      <p>Find your desired bus route quickly.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="search-section">
+      <input type="text" id="fromInput" placeholder="From (Mirpur)">
+      <input type="text" id="toInput" placeholder="To ( Gulistan)">
+      <button onclick="searchBus()">Search Bus</button>
+    </div>
+    
+    <div class="bus-animation" id="busAnimation"></div>
+
+    <div class="result-section" id="result">
+      <div class="bus-card">
+        <strong>Welcome!</strong><br>
+        Please search for a route to see results.
+      </div>
+    </div>
+  </div>
+  <footer class="simple-footer">
+    <div class="footer-card">
+      <p><strong>Bus Search BD</strong></p>
+      <p>Find bus routes & fares easily within Dhaka city</p>
+      <p>
+        Developed by <strong>Editors&lt;3</strong>
+
+      </p>
+      <p>
+        📧 <a href="mailto:editors@gmail.com">editors@gmail.com</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const fareChart = {
+      // Mirpur
+      "mirpur-gulistan": 35,
+      "mirpur-motijheel": 40,
+      "mirpur-farmgate": 30,
+      "mirpur-shahbagh": 35,
+      "mirpur-dhanmondi": 30,
+      "mirpur-uttara": 25,
+      "mirpur-badda": 45,
+      "mirpur-jatrabari": 50,
+
+      // Uttara
+      "uttara-gulistan": 45,
+      "uttara-motijheel": 50,
+      "uttara-farmgate": 40,
+      "uttara-shahbagh": 45,
+      "uttara-dhanmondi": 40,
+      "uttara-mirpur": 25,
+      "uttara-badda": 30,
+      "uttara-jatrabari": 55,
+
+      // Dhanmondi
+      "dhanmondi-gulistan": 30,
+      "dhanmondi-motijheel": 35,
+      "dhanmondi-farmgate": 25,
+      "dhanmondi-shahbagh": 20,
+      "dhanmondi-mirpur": 30,
+      "dhanmondi-uttara": 40,
+      "dhanmondi-badda": 35,
+      "dhanmondi-jatrabari": 45,
+
+      // Motijheel
+      "motijheel-gulistan": 20,
+      "motijheel-farmgate": 30,
+      "motijheel-shahbagh": 25,
+      "motijheel-dhanmondi": 35,
+      "motijheel-mirpur": 40,
+      "motijheel-uttara": 50,
+      "motijheel-jatrabari": 30,
+
+      // Gulistan
+      "gulistan-farmgate": 30,
+      "gulistan-shahbagh": 25,
+      "gulistan-dhanmondi": 30,
+      "gulistan-mirpur": 35,
+      "gulistan-uttara": 45,
+      "gulistan-jatrabari": 25,
+
+      // Farmgate
+      "farmgate-shahbagh": 15,
+      "farmgate-dhanmondi": 25,
+      "farmgate-mirpur": 30,
+      "farmgate-uttara": 40,
+      "farmgate-gulistan": 30,
+      "farmgate-motijheel": 30,
+      "farmgate-badda": 35,
+
+      // Shahbagh
+      "shahbagh-dhanmondi": 20,
+      "shahbagh-farmgate": 15,
+      "shahbagh-gulistan": 25,
+      "shahbagh-mirpur": 35,
+      "shahbagh-uttara": 45,
+
+      // Badda
+      "badda-gulistan": 35,
+      "badda-motijheel": 40,
+      "badda-dhanmondi": 35,
+      "badda-mirpur": 45,
+      "badda-uttara": 30,
+
+      // Jatrabari
+      "jatrabari-gulistan": 25,
+      "jatrabari-motijheel": 30,
+      "jatrabari-dhanmondi": 45,
+      "jatrabari-mirpur": 50,
+      "jatrabari-uttara": 55
+    };
+
+    function normalize(text) {
+      return text.trim().toLowerCase();
+    }
+
+    function searchBus() {
+      const fromText = document.getElementById("fromInput").value || "Dhaka City";
+      const toText = document.getElementById("toInput").value || "Anywhere";
+
+      const routeKey = `${normalize(fromText)}-${normalize(toText)}`;
+      const fare = fareChart[routeKey];
+
+      const fareHtml = fare
+        ? `<span class="fare">Fare: ৳${fare}</span>`
+        : `<span class="fare">Fare: Not Available</span>`;
+
+      const resultDiv = document.getElementById("result");
+      const animationDiv = document.getElementById("busAnimation");
+
+      resultDiv.innerHTML = "";
+      animationDiv.style.display = "block";
+      animationDiv.innerHTML = `<div class="bus">🚌</div>`;
+
+      setTimeout(() => {
+        animationDiv.style.display = "none";
+
+        resultDiv.innerHTML = `
+    <div class="bus-card">
+        <strong>Shah Ali</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Bihang</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Ekushe</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Achim Paribahan</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Trans Silva</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Victor Classic</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+
+    <div class="bus-card">
+        <strong>Trust Transport</strong><br>
+        Route: ${fromText} → ${toText}<br>
+        <span class="fare">Fare: ৳${fare}</span>
+    </div>
+`;
+
+      }, 2500);
+    }
+  </script>
+  <script src="scripts/common.js"></script>
+</body>
+
+</html>

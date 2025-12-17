@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This is navbar</title>
+    <style>
+        /* NAVBAR STYLE */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 50px;
+            background: linear-gradient(90deg, #0f172a, #1e293b);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* LOGO */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
+
+        /* NAV LINKS */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #e5e7eb;
+            padding: 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* HOVER EFFECT */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 2px;
+            left: 0;
+            bottom: -4px;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+
+        /* RESPONSIVE (optional) */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 14px 25px;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">BusRoute</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="finder.html">Finder</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</body>
+
+</html>
