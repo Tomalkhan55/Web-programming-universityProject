@@ -7,125 +7,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    /* RESET */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
     body {
-      background: #f4f6f8;
-      color: #1f2933;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f1f8f6;
+      color: #2e3d3a;
     }
 
-    /* NAVBAR */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 50px;
-      background: #0f172a;
-      color: white;
+    .header-line {
+      height: 6px;
+      background: linear-gradient(to right, #1abc9c, #16a085);
     }
 
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-      color: #38bdf8;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 25px;
-    }
-
-    .nav-links a {
-      color: #e5e7eb;
-      text-decoration: none;
-      font-size: 15px;
-    }
-
-    .nav-links a:hover {
-      color: #38bdf8;
-    }
-
-    /* FINDER SECTION */
-    .finder-container {
+    .container {
       max-width: 900px;
-      margin: 50px auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      margin: 30px auto;
+      padding: 0 15px;
     }
 
-    .finder-container h1 {
+    h1 {
       text-align: center;
-      margin-bottom: 10px;
-      color: #0f172a;
+      color: red;
+      margin-bottom: 5px;
     }
 
-    .finder-container p {
+    .subtitle {
+      text-align: center;
+      color: green;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
       text-align: center;
       margin-bottom: 25px;
-      color: #555;
-      font-size: 15px;
-    }
-
-    /* SEARCH */
-    .search-box {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 30px;
     }
 
     .search-box input {
-      width: 60%;
-      padding: 10px;
-      font-size: 15px;
+      padding: 8px 12px;
+      width: 220px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 6px;
     }
 
     .search-box button {
-      padding: 10px 20px;
-      background: #38bdf8;
+      padding: 8px 15px;
+      margin-left: 5px;
+      background: #16a085;
+      color: white;
       border: none;
-      color: #fff;
-      font-size: 15px;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
-    .search-box button:hover {
-      background: #0ea5e9;
-    }
-
-    /* RESULT */
-    .results {
-      margin-top: 20px;
-    }
-
     .bus-card {
-      background: #f8fafc;
-      border-left: 5px solid #38bdf8;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 5px;
+      background: #e6f7f4;
+      border: 1px solid #b9e5dd;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
 
-    .bus-card h3 {
+    .bus-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: purple;
       margin-bottom: 6px;
-      color: #0f172a;
+    }
+
+    .bus-info {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: brown;
+    }
+
+    .bus-info span {
+      font-weight: bold;
+      color: #065f46;
     }
 
     .route {
-      font-size: 14px;
-      color: #374151;
+      font-size: 13px;
+      color: #355f5b;
+      line-height: 1.7;
     }
   </style>
 </head>
@@ -135,73 +99,121 @@
   <!-- Navbar -->
   <div id="navbar"></div>
 
-  <!-- FINDER CONTENT -->
-  <section class="finder-container">
-    <h1>Bus Route Finder</h1>
-    <p>
-      আপনার বাসের নাম লিখে সার্চ দিন।
-      আমরা জানিয়ে দেবো বাসটি কোন কোন রুট দিয়ে চলাচল করে।
+  <div class="container">
+    <h1>বাসের বিবরণ</h1>
+    <p class="subtitle">
+      আপনার সুবিধার্থে কিছু জনপ্রিয় বাসের রুটের তথ্য এখানে দেওয়া হলো।
     </p>
 
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="উদাহরণ: Achim Paribahan">
+      <input type="text" id="searchInput" placeholder="Bus name লিখুন">
       <button onclick="searchBus()">Search</button>
     </div>
 
-    <div class="results" id="results"></div>
-  </section>
+    <div class="bus-card">
+      <div class="bus-title">Asmani Poribohon</div>
+      <div class="bus-info"><span>Service:</span> Local</div>
+      <div class="route">
+        <span>Route:</span>
+        Gabtoli → Technical → Ansar Camp → Mirpur 1 → Sony Cinema Hall →
+        Mirpur 2 → Mirpur 10 → Mirpur 11 → Purobi → Kalshi →
+        ECB Square → MES → Shewrapara → Kuril Bishwa Road →
+        Jamuna Future Park → Bashundhara → Nadda → Notun Bazar →
+        Bashtola → Shahjadpur → Uttar Badda → Badda →
+        Madhya Badda → Merul → Rampura Bridge →
+        Banasree → Demra Staff Quarter
+      </div>
+    </div>
+
+    <div class="bus-card">
+      <div class="bus-title">Alif Poribohon</div>
+      <div class="bus-info"><span>Service:</span> Local</div>
+      <div class="route">
+        <span>Route:</span>
+        Shia Masjid → Adabor → Shyamoli → Technical →
+        Ansar Camp → Mirpur 1 → Sony Hall → Mirpur 2 →
+        Mirpur 10 → Mirpur 11 → Purobi → Kalshi →
+        ECB Square → MES → Shewrapara →
+        Kuril Bishwa Road → Khilkhet → Airport →
+        Jashimuddin → Rajlakshmi → Azampur →
+        House Building → Abdullahpur
+      </div>
+    </div>
+
+    <div class="bus-card">
+      <div class="bus-title">অগ্রদূত (Agrudut)</div>
+      <div class="bus-info"><span>Service:</span> Semi Counter</div>
+      <div class="route">
+        <span>Route:</span>
+        Mirpur → Kazipara → Farmgate → Banglamotor →
+        Shahbagh → Motijheel → Jatrabari → Shonir Akhra
+      </div>
+    </div>
+
+    <div class="bus-card">
+      <div class="bus-title">Poristhan Poribohon</div>
+      <div class="bus-info"><span>Service:</span> Local</div>
+      <div class="route">
+        <span>Route:</span>
+        Gabtoli → Kallyanpur → Shyamoli → Asad Gate →
+        Farmgate → Karwan Bazar → Banglamotor →
+        Shahbagh → Press Club → Motijheel →
+        Golap Shah Mazar → Jatrabari → Signboard
+      </div>
+    </div>
+
+    <div class="bus-card">
+      <div class="bus-title">Bikash Poribohon</div>
+      <div class="bus-info"><span>Service:</span> Local</div>
+      <div class="route">
+        <span>Route:</span>
+        Mirpur 14 → Mirpur 10 → Kazipara →
+        Agargaon → Bijoy Sarani →
+        Farmgate → Karwan Bazar →
+        Banglamotor → Shahbagh →
+        Gulistan → Gulisthan Stadium →
+        Sadarghat
+      </div>
+    </div>
+
+    <div class="bus-card">
+      <div class="bus-title">Viktor Classic</div>
+      <div class="bus-info"><span>Service:</span> Local</div>
+      <div class="route">
+        <span>Route:</span>
+        Abdullahpur → House Building →
+        Azampur → Rajlakshmi →
+        Jashimuddin → Airport →
+        Khilkhet → Kuril →
+        Natun Bazar → Badda →
+        Rampura → Malibagh →
+        Mouchak → Shahbagh →
+        Motijheel
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function searchBus() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let cards = document.getElementsByClassName("bus-card");
+
+      for (let i = 0; i < cards.length; i++) {
+        let title = cards[i]
+          .getElementsByClassName("bus-title")[0]
+          .innerText.toLowerCase();
+
+        if (title.includes(input)) {
+          cards[i].style.display = "block";
+        } else {
+          cards[i].style.display = "none";
+        }
+      }
+    }
+  </script>
 
   <!-- FOOTER -->
   <div id="footer"></div>
-  <script>
-    /* JSON DUMMY DATA */
-    const busData = [
-      { name: "Achim Paribahan", route: "Gabtoli → Mirpur → Badda → Rampura" },
-      { name: "Active Paribahan", route: "Shyamoli → Mirpur → Airport → Abdullahpur" },
-      { name: "Agradut", route: "Savar → Gabtoli → Farmgate → Badda" },
-      { name: "Azmeri Glory", route: "Sadarghat → Gulistan → Airport → Gazipur" },
-      { name: "Ajmi", route: "Dhamrai → Savar → Dhanmondi → Gulistan" },
-      { name: "Akash", route: "Keraniganj → Malibagh → Badda → Uttara" },
-      { name: "Akik", route: "Mirpur → ECB → Kuril → Badda" },
-      { name: "Al Makka", route: "Motijheel → Malibagh → Banani → Mirpur" },
-      { name: "Al Madina", route: "Savar → Farmgate → Motijheel" },
-      { name: "Alif", route: "Mirpur → Shyamoli → Mohakhali → Badda" },
-      { name: "Anabil Super", route: "Sign Board → Rampura → Airport → Gazipur" }
-    ];
-
-    const resultsDiv = document.getElementById("results");
-
-    /* SHOW DEMO DATA INITIALLY */
-    window.onload = () => {
-      displayResults(busData);
-    };
-
-    function searchBus() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-
-      const filtered = busData.filter(bus =>
-        bus.name.toLowerCase().includes(input)
-      );
-
-      if (filtered.length === 0) {
-        resultsDiv.innerHTML = "<p>❌ কোনো বাস পাওয়া যায়নি।</p>";
-      } else {
-        displayResults(filtered);
-      }
-    }
-
-    function displayResults(data) {
-      resultsDiv.innerHTML = "";
-      data.forEach(bus => {
-        resultsDiv.innerHTML += `
-                    <div class="bus-card">
-                        <h3>${bus.name}</h3>
-                        <p class="route">🛣 Route: ${bus.route}</p>
-                    </div>
-                `;
-      });
-    }
-  </script>
   <script src="scripts/common.js"></script>
 
 </body>
